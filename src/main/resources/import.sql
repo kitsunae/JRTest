@@ -1,0 +1,10 @@
+INSERT INTO Users (Login, Name, Password, Surname) VALUES ("kitsunae", "Anton", "1234", "Lashin");
+INSERT INTO Users (Login, Name, Password, Surname) VALUES ("JLen", "John", "147852", "Lennon");
+INSERT INTO Users (Login, Name, Password, Surname) VALUES ("Mj", "Mikael", "15963", "Jackson");
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ('2013-08-05 18:19:03', TRUE, "Test Text for Anton Lashin", "Test Title for Anton Lashin", 1);
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ('2014-08-05 18:19:03', FALSE, "Test Text 2 for Anton Lashin", "Test Title 2 for Anton Lashin", 1);
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ('2015-08-05 18:19:03', FALSE, "Test Text for John Lennon", "Test Title for John Lennon", 2);
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ('2016-08-05 18:19:03', FALSE, "Test Text 2 for John Lennon" , "Test Title 2 for John Lennon",2);
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ('2017-08-05 18:19:03', TRUE, "Test Text Mike" , "Test Title for Mike", 3);
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ('2018-08-05 18:19:03', TRUE, "Test Text 2 Mike" , "Test Title 2 for Mike", 3);
+INSERT INTO Task (CreatedAt, Done, Text, Title, User_id) VALUES ( '2019-08-05 18:19:03', FALSE, "Test Text 3 Mike" , "Test Title 3 for Mike",3);
