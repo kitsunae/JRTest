@@ -2,49 +2,22 @@
  * Created by lashi on 01.03.2017.
  */
 angular.module('jrTest').controller('TasksController',
-    function ($http, $rootScope, $routeParams, $scope, TaskService, UserService, PagesService) {
+    function ($http, $rootScope, $routeParams, $scope, TaskService, UserService, PagesService, $cookies) {
 
         var clicked = undefined;
         var indexOfLastTask = -1;
-
         $scope.lastTask = null;
         $scope.tasks = [];
         $scope.pages = [];
-        if ($rootScope.selectedUser == null) {
-            UserService.getUser($routeParams.id)
-                .then(function successCallback(response) {
-                    $scope.user = response.data;
-                    TaskService.getAll(UserService.getLinkToUserTasks($scope.user))
-                        .then(function successCallback(data) {
-                            $scope.tasks = data.data;
-                        }, function errorCallback(data) {
-                            console.log(data.statusText);
-                        });
-                    PagesService.getTaskPages(20, $scope.user.number)
-                        .then(function successCallback(data) {
-                            for (var i = 1; i <= data.data; ++i) {
-                                $scope.pages.push(i);
-                            }
-                        }, function errorCallback(data) {
-                            console.log(data.statusText);
-                        });
 
-                    $scope.isClicked = function (task) {
-                        return task === clicked;
-                    };
-                }, function errorCallback(response) {
-                    console.log('Server error' + response.statusText);
-                });
-        } else {
-            $scope.user = $rootScope.selectedUser;
-            $rootScope.selectedUser = null;
-            TaskService.getAll(UserService.getLinkToUserTasks($scope.user))
+        var init = function (user) {
+            TaskService.getAll(UserService.getLinkToUserTasks(user))
                 .then(function successCallback(data) {
                     $scope.tasks = data.data;
                 }, function errorCallback(data) {
                     console.log(data.statusText);
                 });
-            PagesService.getTaskPages(20, $scope.user.number)
+            PagesService.getTaskPages(20, user.number)
                 .then(function successCallback(data) {
                     for (var i = 1; i <= data.data; ++i) {
                         $scope.pages.push(i);
@@ -56,8 +29,25 @@ angular.module('jrTest').controller('TasksController',
             $scope.isClicked = function (task) {
                 return task === clicked;
             };
-        }
 
+            $scope.isAvailable = function () {
+                return user.login == $cookies.get("userId");
+            }
+        };
+
+        if ($rootScope.selectedUser == null) {
+            UserService.getUser($routeParams.id)
+                .then(function successCallback(response) {
+                    $scope.user = response.data;
+                    init($scope.user);
+                }, function errorCallback(response) {
+                    console.log('Server error' + response.statusText);
+                });
+        } else {
+            $scope.user = $rootScope.selectedUser;
+            $rootScope.selectedUser = null;
+            init($scope.user);
+        }
 
         $scope.setClicked = function (task) {
             for (var i = 0; i < $scope.tasks.length; ++i) {
@@ -108,5 +98,5 @@ angular.module('jrTest').controller('TasksController',
                 }
             }
             TaskService.removeTask($scope.lastTask, $scope.lastTask.user.number);
-        }
+        };
     });

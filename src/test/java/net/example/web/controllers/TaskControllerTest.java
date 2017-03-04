@@ -4,6 +4,7 @@ import net.example.root.domain.Task;
 import net.example.root.domain.User;
 import net.example.root.hateoas.asm.TaskResourceAsm;
 import net.example.root.service.TaskService;
+import net.example.root.service.UserService;
 import net.example.web.exceptions.TaskNotFoundException;
 import net.example.web.exceptions.UserNotFoundException;
 import org.junit.Before;
@@ -32,6 +33,8 @@ public class TaskControllerTest {
 
     @Mock
     private TaskService service;
+    @Mock
+    private UserService userService;
 
     private TaskResourceAsm resourceAsm;
     private TaskController taskController;
@@ -67,7 +70,7 @@ public class TaskControllerTest {
         when(service.save(task3, -1)).thenThrow(new UserNotFoundException());
         when(service.remove(-1)).thenThrow(new TaskNotFoundException());
         resourceAsm = new TaskResourceAsm();
-        taskController = new TaskController(service, resourceAsm);
+        taskController = new TaskController(service, resourceAsm, userService);
         mockMvc = MockMvcBuilders.standaloneSetup(taskController).build();
     }
 

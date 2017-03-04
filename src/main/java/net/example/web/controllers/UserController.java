@@ -3,9 +3,12 @@ package net.example.web.controllers;
 import net.example.root.domain.User;
 import net.example.root.hateoas.UserResource;
 import net.example.root.service.UserService;
+import net.example.web.exceptions.AccessDeniedException;
 import net.example.web.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,15 +60,35 @@ public class UserController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public UserResource remove(@PathVariable long id){
-        User user = service.remove(id);
-        if (user==null)
-            throw new UserNotFoundException();
-        return resourceAssembler.toResource(user);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            String login = ((UserDetails) principal).getUsername();
+            if (id==service.getUserByLogin(login).getId()){
+                User user = service.remove(id);
+                if (user==null)
+                    throw new UserNotFoundException();
+                return resourceAssembler.toResource(user);
+            }else{
+                throw new AccessDeniedException();
+            }
+        }else{
+            throw new AccessDeniedException();
+        }
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public UserResource edit(@RequestBody UserResource user,
                              @PathVariable long id){
-        return resourceAssembler.toResource(service.edit(user.toUser(), id));
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails){
+            String login = ((UserDetails) principal).getUsername();
+            if (id == service.getUserByLogin(login).getId()){
+                return resourceAssembler.toResource(service.edit(user.toUser(), id));
+            }else{
+                throw new AccessDeniedException();
+            }
+        }else{
+            throw new AccessDeniedException();
+        }
     }
 }

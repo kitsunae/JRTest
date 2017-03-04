@@ -5,11 +5,11 @@
     <table class="table text-center table-hover">
         <thead>
         <tr>
-            <td class="lead">Name</td>
-            <td class="lead">Surname</td>
-            <td class="lead">Login</td>
-            <td class="lead">Edit</td>
-            <td class="lead">Remove</td>
+            <td class="lead col-md-3">Name</td>
+            <td class="lead col-md-4">Surname</td>
+            <td class="lead col-md-3">Login</td>
+            <td class="lead" ng-show="isLoggedIn()">Edit</td>
+            <td class="lead" ng-show="isLoggedIn()">Remove</td>
         </tr>
         </thead>
         <tbody>
@@ -18,10 +18,10 @@
             <td class="col-md-3">{{user.surname}}</td>
             <td class="col-md-3">{{user.login}}</td>
             <td>
-                <button>Edit</button>
+                <button ng-show="isAvailable(user)">Edit</button>
             </td>
             <td>
-                <button>Remove</button>
+                <button ng-show="isAvailable(user)">Remove</button>
             </td>
         </tr>
         </tbody>

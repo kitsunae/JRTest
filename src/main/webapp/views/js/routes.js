@@ -14,5 +14,9 @@ angular.module('jrTest').config(function ($routeProvider) {
             templateUrl: "templates/pages/tasks/index.html",
             controller: 'TasksController'
         })
+        .when("/register", {
+            templateUrl: "templates/pages/registration/index.html",
+            controller: 'UsersController'
+        })
         .otherwise({redirectTo: "/"});
 });

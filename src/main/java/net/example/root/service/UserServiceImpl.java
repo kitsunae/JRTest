@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User remove(long id) {
         User user = repository.findOne(id);
-        repository.delete(id);
+        if (user!=null)
+            repository.delete(id);
         return user;
     }
 

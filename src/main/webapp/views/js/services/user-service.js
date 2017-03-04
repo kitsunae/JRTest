@@ -16,8 +16,36 @@ angular.module('jrTest').factory('UserService', function UserService($http){
         }
     };
 
+    service.login = function (data) {
+        return $http({
+            method: "POST",
+            url: "login",
+            params:{
+                "username": data.login,
+                "password": data.password
+            },
+            headers:{
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        })
+            .then(function (response) {
+                alert("log in successful");
+                alert(response);
+            }, function (error) {
+                alert("error log in");
+            });
+    };
+
     service.getAllUsers = function(){
         return $http({method : "GET", url : "user/all"});
+    };
+
+    service.addUser = function (user) {
+        return $http({
+            method: "POST",
+            url: "user",
+            data: user
+        });
     };
 
     return service;

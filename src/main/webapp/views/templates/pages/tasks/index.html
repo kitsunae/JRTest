@@ -14,8 +14,8 @@
                 <tr>
                     <td class="lead">Title</td>
                     <td class="lead">Status</td>
-                    <td class="lead">Edit</td>
-                    <td class="lead">Remove</td>
+                    <td class="lead" ng-show="isAvailable()">Edit</td>
+                    <td class="lead" ng-show="isAvailable()">Remove</td>
                 </tr>
                 </thead>
                 <tr ng-repeat="task in tasks"
@@ -34,10 +34,10 @@
                         <i class="glyphicon glyphicon-ok" ng-show="task.done"></i>
                         <i class="glyphicon glyphicon-remove" ng-hide="task.done"></i>
                     </td>
-                    <td ng-hide="isClicked(task)">
+                    <td ng-hide="isClicked(task) || !isAvailable()">
                         <button ng-click="setClicked(task)">Edit</button>
                     </td>
-                    <td ng-hide="isClicked(task)">
+                    <td ng-hide="isClicked(task) || !isAvailable()">
                         <button ng-click="remove(task)">Remove</button>
                     </td>
                     <td ng-show="isClicked(task)" class="text-justify col-md-12" colspan="4">
@@ -66,7 +66,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" ng-hide="isClicked(null)">
+                    <td colspan="4" ng-hide="isClicked(null) || !isAvailable()">
                         <button class="btn btn-info pull-right" ng-click="setClicked(null)">Add Task</button>
                     </td>
                     <td ng-show="isClicked(null)" class="text-justify col-md-12" colspan="4">
@@ -102,8 +102,8 @@
                 <tr>
                     <td class="lead">Title</td>
                     <td class="lead">Status</td>
-                    <td class="lead">Edit</td>
-                    <td class="lead">Remove</td>
+                    <td class="lead" ng-show="isAvailable()">Edit</td>
+                    <td class="lead" ng-show="isAvailable()">Remove</td>
                 </tr>
                 </thead>
                 <tr ng-repeat="task in tasks" ng-show="task.done"
@@ -120,10 +120,10 @@
                     <td ng-hide="isClicked(task)">
                         <i class="glyphicon glyphicon-ok"></i>
                     </td>
-                    <td ng-hide="isClicked(task)">
+                    <td ng-hide="isClicked(task) || !isAvailable()">
                         <button ng-click="setClicked(task)">Edit</button>
                     </td>
-                    <td ng-hide="isClicked(task)">
+                    <td ng-hide="isClicked(task) || !isAvailable()">
                         <button ng-click="remove(task)">Remove</button>
                     </td>
                     <td ng-show="isClicked(task)" class="text-justify col-md-12" colspan="4">
@@ -152,7 +152,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" ng-hide="isClicked(null)">
+                    <td colspan="4" ng-hide="isClicked(null) || !isAvailable()">
                         <button class="btn btn-info pull-right" ng-click="setClicked(null)">Add Task</button>
                     </td>
                     <td ng-show="isClicked(null)" class="text-justify col-md-12" colspan="4">
@@ -188,8 +188,8 @@
                 <tr>
                     <td class="lead">Title</td>
                     <td class="lead">Status</td>
-                    <td class="lead">Edit</td>
-                    <td class="lead">Remove</td>
+                    <td class="lead" ng-show="isAvailable()">Edit</td>
+                    <td class="lead" ng-show="isAvailable()">Remove</td>
                 </tr>
                 </thead>
                 <tr ng-repeat="task in tasks" ng-hide="task.done"
@@ -206,10 +206,10 @@
                     <td ng-hide="isClicked(task)">
                         <i class="glyphicon glyphicon-remove"></i>
                     </td>
-                    <td ng-hide="isClicked(task)">
+                    <td ng-hide="isClicked(task) || !isAvailable()">
                         <button ng-click="setClicked(task)">Edit</button>
                     </td>
-                    <td ng-hide="isClicked(task)">
+                    <td ng-hide="isClicked(task) || !isAvailable()">
                         <button ng-click="remove(task)">Remove</button>
                     </td>
                     <td ng-show="isClicked(task)" class="text-justify col-md-12" colspan="4">
@@ -238,7 +238,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" ng-hide="isClicked(null)">
+                    <td colspan="4" ng-hide="isClicked(null) || !isAvailable()">
                         <button class="btn btn-info pull-right" ng-click="setClicked(null)">Add Task</button>
                     </td>
                     <td ng-show="isClicked(null)" class="text-justify col-md-12" colspan="4">
