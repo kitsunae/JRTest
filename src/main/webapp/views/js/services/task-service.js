@@ -3,28 +3,29 @@
  */
 angular.module('jrTest').factory('TaskService', function TaskServiceFactory($http) {
     var service = {};
+
     service.getAll = function (link) {
-        var result = [];
-        $http({method: "GET", url: link}).then(function successCallback(data) {
-            for (var i = 1; i <= data; ++i) {
-                result.push(i);
-            }
-        }, function errorCallback(data) {
-            console.log(data.statusText);
-        });
-        return result;
+        return $http({method: "GET", url: link});
     };
 
     service.getTaskSelfUrl = function (task) {
-        for (var link in task.links) {
-            if (link.rel === "self"){
-                return link.href;
+        for (var i = 0; i<task.links.length; ++i) {
+            if (task.links[i].rel === "self"){
+                return task.links[i].href;
             }
         }
     };
 
-    service.saveTask = function (task) {
+    service.saveTask = function (task, userId) {
+        return $http({method: "POST", url: "task", params: {'userId': userId}, data: task});
+    };
 
+    service.updateTask = function (task) {
+        return $http({method: "PUT", url: this.getTaskSelfUrl(task), params:{}, data: task});
+    };
+
+    service.removeTask = function (task, userId) {
+        return $http({method: "DELETE", url: this.getTaskSelfUrl(task), params: {'userId': userId}});
     };
 
     return service;

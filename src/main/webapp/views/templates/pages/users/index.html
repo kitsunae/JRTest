@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr role="button" ng-repeat="user in usersCtrl.users" ng-click="usersCtrl.setUser(user)">
+        <tr role="button" ng-repeat="user in users" ng-click="setUser(user)">
             <td class="col-md-3">{{user.name}}</td>
             <td class="col-md-3">{{user.surname}}</td>
             <td class="col-md-3">{{user.login}}</td>
@@ -34,7 +34,7 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li ng-repeat="page in usersCtrl.pages"><a href="#">{{page}}</a></li>
+                <li ng-repeat="page in pages"><a href="#">{{page}}</a></li>
                 <li>
                     <a href="#" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

@@ -18,11 +18,11 @@
                     <td class="lead">Remove</td>
                 </tr>
                 </thead>
-                <tr ng-repeat="task in tasksCtrl.tasks"
+                <tr ng-repeat="task in tasks"
                     ng-class="{success : task.done, warning : !task.done}" data-toggle="collapse"
                     href="#{{task.createdAt}}" aria-expanded="false" aria-controls="{{task.createdAt}}"
                     role="button">
-                    <td class="text-justify col-md-9" ng-hide="tasksCtrl.isClicked(task.createdAt)">
+                    <td class="text-justify col-md-9" ng-hide="isClicked(task)">
                         <p class="lead">{{task.title}}</p>
                         <div class="collapse text-justify" id="{{task.createdAt}}">
                             <p>{{task.text}}</p>
@@ -30,17 +30,17 @@
                             <p>by {{task.user.name + " "+ task.user.surname}}</p>
                         </div>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
+                    <td ng-hide="isClicked(task)">
                         <i class="glyphicon glyphicon-ok" ng-show="task.done"></i>
                         <i class="glyphicon glyphicon-remove" ng-hide="task.done"></i>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
-                        <button ng-click="tasksCtrl.setClicked(task.createdAt)">Edit</button>
+                    <td ng-hide="isClicked(task)">
+                        <button ng-click="setClicked(task)">Edit</button>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
-                        <button ng-click="tasksCtrl.remove(task.createdAt)">Remove</button>
+                    <td ng-hide="isClicked(task)">
+                        <button ng-click="remove(task)">Remove</button>
                     </td>
-                    <td ng-show="tasksCtrl.isClicked(task.createdAt)" class="text-justify col-md-12" colspan="4">
+                    <td ng-show="isClicked(task)" class="text-justify col-md-12" colspan="4">
                         <div>
                             <p class="lead">{{task.title}}</p>
                             <div>
@@ -58,38 +58,38 @@
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="Submit"
-                                       ng-click="tasksCtrl.acceptChanges()">
+                                       ng-click="acceptChanges()">
                                 <input class="btn btn-warning" type="submit" value="Cancel"
-                                       ng-click="tasksCtrl.cancelChanges()">
+                                       ng-click="cancelChanges()">
                             </div>
                         </form>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" ng-hide="tasksCtrl.isClicked(-1)">
-                        <button class="btn btn-info pull-right" ng-click="tasksCtrl.setClicked(-1)">Add Task</button>
+                    <td colspan="4" ng-hide="isClicked(null)">
+                        <button class="btn btn-info pull-right" ng-click="setClicked(null)">Add Task</button>
                     </td>
-                    <td ng-show="tasksCtrl.isClicked(-1)" class="text-justify col-md-12" colspan="4">
+                    <td ng-show="isClicked(null)" class="text-justify col-md-12" colspan="4">
                         <div>
-                            <p class="lead">{{tasksCtrl.lastTask.title}}</p>
+                            <p class="lead">{{lastTask.title}}</p>
                             <div>
-                                <p>{{tasksCtrl.lastTask.text}}</p>
+                                <p>{{lastTask.text}}</p>
                             </div>
                         </div>
                         <form class="col-md-12">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input class="form-control" type="text" id="newTitle" ng-model="tasksCtrl.lastTask.title">
+                                <input class="form-control" type="text" id="newTitle" ng-model="lastTask.title">
                             </div>
                             <div class="form-group">
                                 <label for="text">Text</label>
-                                <textarea class="form-control" id="newText" ng-model="tasksCtrl.lastTask.text"></textarea>
+                                <textarea class="form-control" id="newText" ng-model="lastTask.text"></textarea>
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="Submit"
-                                       ng-click="tasksCtrl.acceptChanges()">
+                                       ng-click="acceptChanges()">
                                 <input class="btn btn-warning" type="submit" value="Cancel"
-                                       ng-click="tasks.cancelChanges()">
+                                       ng-click="cancelChanges()">
                             </div>
                         </form>
                     </td>
@@ -106,10 +106,10 @@
                     <td class="lead">Remove</td>
                 </tr>
                 </thead>
-                <tr ng-repeat="task in tasksCtrl.tasks" ng-show="task.done"
+                <tr ng-repeat="task in tasks" ng-show="task.done"
                     class="success" data-toggle="collapse" href="#{{task.createdAt+'1'}}" aria-expanded="false"
                     aria-controls="{{task.createdAt+'1'}}" role="button">
-                    <td class="text-justify col-md-9" ng-hide="tasksCtrl.isClicked(task.createdAt)">
+                    <td class="text-justify col-md-9" ng-hide="isClicked(task)">
                         <p class="lead">{{task.title}}</p>
                         <div class="collapse text-justify" id="{{task.createdAt+'1'}}">
                             <p>{{task.text}}</p>
@@ -117,16 +117,16 @@
                             <p>by {{task.user.name + " "+ task.user.surname}}</p>
                         </div>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
+                    <td ng-hide="isClicked(task)">
                         <i class="glyphicon glyphicon-ok"></i>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
-                        <button ng-click="tasksCtrl.setClicked(task.createdAt)">Edit</button>
+                    <td ng-hide="isClicked(task)">
+                        <button ng-click="setClicked(task)">Edit</button>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
-                        <button ng-click="tasksCtrl.remove(task.createdAt)">Remove</button>
+                    <td ng-hide="isClicked(task)">
+                        <button ng-click="remove(task)">Remove</button>
                     </td>
-                    <td ng-show="tasksCtrl.isClicked(task.createdAt)" class="text-justify col-md-12" colspan="4">
+                    <td ng-show="isClicked(task)" class="text-justify col-md-12" colspan="4">
                         <div>
                             <p class="lead">{{task.title}}</p>
                             <div>
@@ -144,38 +144,38 @@
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="Submit"
-                                       ng-click="tasksCtrl.acceptChanges()">
+                                       ng-click="acceptChanges()">
                                 <input class="btn btn-warning" type="submit" value="Cancel"
-                                       ng-click="tasksCtrl.cancelChanges()">
+                                       ng-click="cancelChanges()">
                             </div>
                         </form>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" ng-hide="tasksCtrl.isClicked(-1)">
-                        <button class="btn btn-info pull-right" ng-click="tasksCtrl.setClicked(-1)">Add Task</button>
+                    <td colspan="4" ng-hide="isClicked(null)">
+                        <button class="btn btn-info pull-right" ng-click="setClicked(null)">Add Task</button>
                     </td>
-                    <td ng-show="tasksCtrl.isClicked(-1)" class="text-justify col-md-12" colspan="4">
+                    <td ng-show="isClicked(null)" class="text-justify col-md-12" colspan="4">
                         <div>
-                            <p class="lead">{{tasksCtrl.lastTask.title}}</p>
+                            <p class="lead">{{lastTask.title}}</p>
                             <div>
-                                <p>{{tasksCtrl.lastTask.text}}</p>
+                                <p>{{lastTask.text}}</p>
                             </div>
                         </div>
                         <form class="col-md-12">
                             <div class="form-group">
                                 <label for="newTitle1">Title</label>
-                                <input class="form-control" type="text" id="newTitle1" ng-model="tasksCtrl.lastTask.title">
+                                <input class="form-control" type="text" id="newTitle1" ng-model="lastTask.title">
                             </div>
                             <div class="form-group">
                                 <label for="newText1">Text</label>
-                                <textarea class="form-control" id="newText1" ng-model="tasksCtrl.lastTask.text"></textarea>
+                                <textarea class="form-control" id="newText1" ng-model="lastTask.text"></textarea>
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="Submit"
-                                       ng-click="tasksCtrl.acceptChanges()">
+                                       ng-click="acceptChanges()">
                                 <input class="btn btn-warning" type="submit" value="Cancel"
-                                       ng-click="tasksCtrl.cancelChanges()">
+                                       ng-click="cancelChanges()">
                             </div>
                         </form>
                     </td>
@@ -192,10 +192,10 @@
                     <td class="lead">Remove</td>
                 </tr>
                 </thead>
-                <tr ng-repeat="task in tasksCtrl.tasks" ng-hide="task.done"
+                <tr ng-repeat="task in tasks" ng-hide="task.done"
                     class="warning" data-toggle="collapse" href="#{{task.createdAt+'2'}}" aria-expanded="false"
                     aria-controls="{{task.createdAt+'2'}}" role="button">
-                    <td class="text-justify col-md-9" ng-hide="tasksCtrl.isClicked(task.createdAt)">
+                    <td class="text-justify col-md-9" ng-hide="isClicked(task)">
                         <p class="lead">{{task.title}}</p>
                         <div class="collapse text-justify" id="{{task.createdAt+'2'}}">
                             <p>{{task.text}}</p>
@@ -203,16 +203,16 @@
                             <p>by {{task.user.name + " "+ task.user.surname}}</p>
                         </div>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
+                    <td ng-hide="isClicked(task)">
                         <i class="glyphicon glyphicon-remove"></i>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
-                        <button ng-click="tasksCtrl.setClicked(task.createdAt)">Edit</button>
+                    <td ng-hide="isClicked(task)">
+                        <button ng-click="setClicked(task)">Edit</button>
                     </td>
-                    <td ng-hide="tasksCtrl.isClicked(task.createdAt)">
-                        <button ng-click="tasksCtrl.remove(task.createdAt)">Remove</button>
+                    <td ng-hide="isClicked(task)">
+                        <button ng-click="remove(task)">Remove</button>
                     </td>
-                    <td ng-show="tasksCtrl.isClicked(task.createdAt)" class="text-justify col-md-12" colspan="4">
+                    <td ng-show="isClicked(task)" class="text-justify col-md-12" colspan="4">
                         <div>
                             <p class="lead">{{task.title}}</p>
                             <div>
@@ -230,38 +230,38 @@
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="Submit"
-                                       ng-click="tasksCtrl.acceptChanges()">
+                                       ng-click="acceptChanges()">
                                 <input class="btn btn-warning" type="submit" value="Cancel"
-                                       ng-click="tasksCtrl.cancelChanges()">
+                                       ng-click="cancelChanges()">
                             </div>
                         </form>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4" ng-hide="tasksCtrl.isClicked(-1)">
-                        <button class="btn btn-info pull-right" ng-click="tasksCtrl.setClicked(-1)">Add Task</button>
+                    <td colspan="4" ng-hide="isClicked(null)">
+                        <button class="btn btn-info pull-right" ng-click="setClicked(null)">Add Task</button>
                     </td>
-                    <td ng-show="tasksCtrl.isClicked(-1)" class="text-justify col-md-12" colspan="4">
+                    <td ng-show="isClicked(null)" class="text-justify col-md-12" colspan="4">
                         <div>
-                            <p class="lead">{{tasksCtrl.lastTask.title}}</p>
+                            <p class="lead">{{lastTask.title}}</p>
                             <div>
-                                <p>{{tasksCtrl.lastTask.text}}</p>
+                                <p>{{lastTask.text}}</p>
                             </div>
                         </div>
                         <form class="col-md-12">
                             <div class="form-group">
                                 <label for="newTitle2">Title</label>
-                                <input class="form-control" type="text" id="newTitle2" ng-model="tasksCtrl.lastTask.title">
+                                <input class="form-control" type="text" id="newTitle2" ng-model="lastTask.title">
                             </div>
                             <div class="form-group">
                                 <label for="newText2">Text</label>
-                                <textarea class="form-control" id="newText2" ng-model="tasksCtrl.lastTask.text"></textarea>
+                                <textarea class="form-control" id="newText2" ng-model="lastTask.text"></textarea>
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="Submit"
-                                       ng-click="tasksCtrl.acceptChanges()">
+                                       ng-click="acceptChanges()">
                                 <input class="btn btn-warning" type="submit" value="Cancel"
-                                       ng-click="tasksCtrl.cancelChanges()">
+                                       ng-click="cancelChanges()">
                             </div>
                         </form>
                     </td>
@@ -277,7 +277,7 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li ng-repeat="page in taskCtrl.pages"><a href="#">{{page}}</a></li>
+                <li ng-repeat="page in pages"><a href="#">{{page}}</a></li>
                 <li>
                     <a href="#" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

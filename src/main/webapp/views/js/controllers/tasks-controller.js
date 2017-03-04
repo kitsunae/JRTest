@@ -1,79 +1,112 @@
 /**
  * Created by lashi on 01.03.2017.
  */
-angular.module('jrTest').controller('TasksController',function ($http, $rootScope, $routeParams) {
-    var clicked = 0;
-    var self = this;
-    self.lastTask = null;
-    $http({method: "GET", url: $rootScope.user.links[1].href})
-        .then(function successCallback(data) {
-            self.tasks = data.data;
-        }, function errorCallback(data) {
-            console.log(data.statusText);
-        });
-    $http({method: "GET", url: "task/all/count", params: {"tasksOnPage": 20, "userId": $rootScope.user.number}})
-        .then(function successCallback(data) {
-            self.pages = [];
-            for (var i = 1; i <= data; ++i) {
-                self.pages.push(i);
-            }
-        }, function errorCallback(data) {
-            console.log(data.statusText);
-        });
-    var indexOfLastTask = -1;
+angular.module('jrTest').controller('TasksController',
+    function ($http, $rootScope, $routeParams, $scope, TaskService, UserService, PagesService) {
 
-    self.isClicked = function (task) {
-        return task === clicked;
-    };
+        var clicked = undefined;
+        var indexOfLastTask = -1;
 
-    self.setClicked = function (task) {
-        for (var i = 0; i < self.tasks.length; ++i) {
-            if (self.tasks[i].createdAt === task) {
-                indexOfLastTask = i;
-                self.lastTask = JSON.parse(JSON.stringify(self.tasks[i]));
-            }
-        }
-        clicked = task;
-    };
+        $scope.lastTask = null;
+        $scope.tasks = [];
+        $scope.pages = [];
+        if ($rootScope.selectedUser == null) {
+            UserService.getUser($routeParams.id)
+                .then(function successCallback(response) {
+                    $scope.user = response.data;
+                    TaskService.getAll(UserService.getLinkToUserTasks($scope.user))
+                        .then(function successCallback(data) {
+                            $scope.tasks = data.data;
+                        }, function errorCallback(data) {
+                            console.log(data.statusText);
+                        });
+                    PagesService.getTaskPages(20, $scope.user.number)
+                        .then(function successCallback(data) {
+                            for (var i = 1; i <= data.data; ++i) {
+                                $scope.pages.push(i);
+                            }
+                        }, function errorCallback(data) {
+                            console.log(data.statusText);
+                        });
 
-    self.acceptChanges = function () {
-        clicked = 0;
-        self.lastTask.done = self.lastTask.done || false;
-        if (self.lastTask.createdAt == null) {
-            $http({method: "POST", url: "task", params: {'userId': $rootScope.user.number}, data: self.lastTask})
-                .then(function (response) {
-                    self.tasks.push(response.data);
-                }, function (response) {
-                    console.log(response.statusText);
+                    $scope.isClicked = function (task) {
+                        return task === clicked;
+                    };
+                }, function errorCallback(response) {
+                    console.log('Server error' + response.statusText);
                 });
         } else {
-            self.lastTask = self.tasks[indexOfLastTask];
-            $http({method: "PUT", url: self.lastTask.links[0].href, params:{}, data: self.lastTask})
-                .then(function (response) {
-                    self.tasks.splice(i,indexOfLastTask);
-                    self.tasks.push(response.data);
-                }, function(response){
-                    console.log(response.statusText);
+            $scope.user = $rootScope.selectedUser;
+            $rootScope.selectedUser = null;
+            TaskService.getAll(UserService.getLinkToUserTasks($scope.user))
+                .then(function successCallback(data) {
+                    $scope.tasks = data.data;
+                }, function errorCallback(data) {
+                    console.log(data.statusText);
                 });
-        }
-        self.lastTask = null;
-    };
+            PagesService.getTaskPages(20, $scope.user.number)
+                .then(function successCallback(data) {
+                    for (var i = 1; i <= data.data; ++i) {
+                        $scope.pages.push(i);
+                    }
+                }, function errorCallback(data) {
+                    console.log(data.statusText);
+                });
 
-    self.cancelChanges = function () {
-        if (indexOfLastTask != -1) {
-            self.tasks[indexOfLastTask] = self.lastTask;
+            $scope.isClicked = function (task) {
+                return task === clicked;
+            };
         }
-        self.lastTask = null;
-        clicked = 0;
-    };
 
-    self.remove = function (task) {
-        for (var i = 0; i < self.tasks.length; ++i) {
-            if (self.tasks[i].createdAt === task) {
-                self.lastTask = self.tasks[i];
-                self.tasks.splice(i,1);
+
+        $scope.setClicked = function (task) {
+            for (var i = 0; i < $scope.tasks.length; ++i) {
+                if ($scope.tasks[i] === task) {
+                    indexOfLastTask = i;
+                    $scope.lastTask = JSON.parse(JSON.stringify($scope.tasks[i]));
+                }
             }
+            clicked = task;
+        };
+
+        $scope.acceptChanges = function () {
+            clicked = undefined;
+            $scope.lastTask.done = $scope.lastTask.done || false;
+            if ($scope.lastTask.createdAt == null) {
+                TaskService.saveTask($scope.lastTask, $scope.user.number)
+                    .then(function (response) {
+                        $scope.tasks.push(response.data);
+                    }, function (response) {
+                        console.log(response.statusText);
+                    });
+            } else {
+                $scope.lastTask = $scope.tasks[indexOfLastTask];
+                TaskService.updateTask($scope.lastTask)
+                    .then(function (response) {
+                        $scope.tasks.splice(1, indexOfLastTask);
+                        $scope.tasks.push(response.data);
+                    }, function (response) {
+                        console.log(response.statusText);
+                    });
+            }
+            $scope.lastTask = null;
+        };
+
+        $scope.cancelChanges = function () {
+            if (indexOfLastTask != -1) {
+                $scope.tasks[indexOfLastTask] = $scope.lastTask;
+            }
+            $scope.lastTask = null;
+            clicked = undefined;
+        };
+
+        $scope.remove = function (task) {
+            for (var i = 0; i < $scope.tasks.length; ++i) {
+                if ($scope.tasks[i] === task) {
+                    $scope.lastTask = $scope.tasks[i];
+                    $scope.tasks.splice(i, 1);
+                }
+            }
+            TaskService.removeTask($scope.lastTask, $scope.lastTask.user.number);
         }
-        $http({method: "DELETE", url: self.lastTask.links[0].href, params: {'userId': $rootScope.user.number}});
-    }
-});
+    });
