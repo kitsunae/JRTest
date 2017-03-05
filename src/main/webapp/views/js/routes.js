@@ -3,9 +3,9 @@
  */
 angular.module('jrTest').config(function ($routeProvider) {
     $routeProvider.when("/users", {
-        templateUrl: "templates/pages/users/index.html",
-        controller: 'UsersController'
-    })
+            templateUrl: "templates/pages/users/index.html",
+            controller: 'UsersController'
+        })
         .when("/", {
             templateUrl: "templates/pages/users/index.html",
             controller: 'UsersController'
@@ -17,6 +17,9 @@ angular.module('jrTest').config(function ($routeProvider) {
         .when("/register", {
             templateUrl: "templates/pages/registration/index.html",
             controller: 'UsersController'
+        })
+        .when("/error", {
+            templateUrl: "error-page.html"
         })
         .otherwise({redirectTo: "/"});
 });

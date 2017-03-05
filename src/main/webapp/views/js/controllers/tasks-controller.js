@@ -6,6 +6,8 @@ angular.module('jrTest').controller('TasksController',
 
         var clicked = undefined;
         var indexOfLastTask = -1;
+        var resultsOnPage = 5;
+        $scope.currentPage=1;
         $scope.lastTask = null;
         $scope.tasks = [];
         $scope.pages = [];
@@ -17,7 +19,7 @@ angular.module('jrTest').controller('TasksController',
                 }, function errorCallback(data) {
                     console.log(data.statusText);
                 });
-            PagesService.getTaskPages(20, user.number)
+            PagesService.getTaskPages(resultsOnPage, user.number)
                 .then(function successCallback(data) {
                     for (var i = 1; i <= data.data; ++i) {
                         $scope.pages.push(i);
@@ -99,4 +101,16 @@ angular.module('jrTest').controller('TasksController',
             }
             TaskService.removeTask($scope.lastTask, $scope.lastTask.user.number);
         };
+
+        $scope.getPage = function (page) {
+            if (page>$scope.pages.length || page<1)
+                return;
+            TaskService.getAll(UserService.getLinkToUserTasks($scope.user), page-1, resultsOnPage)
+                .then(function successCallback(data) {
+                    $scope.tasks = data.data;
+                }, function errorCallback(data) {
+                    console.log(data.statusText);
+                });
+            $scope.currentPage = page;
+        }
     });

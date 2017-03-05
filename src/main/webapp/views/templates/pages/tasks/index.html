@@ -273,17 +273,18 @@
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li>
-                    <a href="#" aria-label="Previous">
+                    <a role="button" aria-label="Previous" ng-click="getPage(currentPage-1)">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li ng-repeat="page in pages"><a href="#">{{page}}</a></li>
+                <li ng-repeat="page in pages"><a role="button" ng-click="getPage(page)">{{page}}</a></li>
                 <li>
-                    <a href="#" aria-label="Next">
+                    <a role="button" aria-label="Next" ng-click="getPage(currentPage+1)">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+        <p>Page {{currentPage}} of {{pages.length}}</p>
     </div>
 </div>

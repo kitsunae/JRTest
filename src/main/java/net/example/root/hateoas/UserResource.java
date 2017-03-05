@@ -1,6 +1,7 @@
 package net.example.root.hateoas;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import net.example.root.domain.User;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -13,6 +14,7 @@ public class UserResource extends ResourceSupport {
     private String name;
     private String surname;
     private String login;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public Long getNumber() {

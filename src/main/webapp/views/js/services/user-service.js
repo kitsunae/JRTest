@@ -30,14 +30,15 @@ angular.module('jrTest').factory('UserService', function UserService($http){
         })
             .then(function (response) {
                 alert("log in successful");
-                alert(response);
             }, function (error) {
-                alert("error log in");
+                alert("error logging in");
             });
     };
 
-    service.getAllUsers = function(){
-        return $http({method : "GET", url : "user/all"});
+    service.getAllUsers = function(page, resultsOnPage){
+        var pageNumber = page || 0;
+        var results = resultsOnPage || 5;
+        return $http({method : "GET", url : "user/all", params: {"page": pageNumber, "size": results}});
     };
 
     service.addUser = function (user) {

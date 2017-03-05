@@ -32,7 +32,7 @@ public class UserController {
 
     @RequestMapping(value = "/all/count", method = RequestMethod.GET)
     public Long getNumberOfPages(){
-        return service.getNumberOfAllUsers()/DefaultPageParameters.RESULTS_ON_PAGE;
+        return service.getNumberOfAllUsers()/DefaultPageParameters.RESULTS_ON_PAGE+1;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

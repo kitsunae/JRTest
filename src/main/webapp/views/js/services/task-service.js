@@ -4,7 +4,15 @@
 angular.module('jrTest').factory('TaskService', function TaskServiceFactory($http) {
     var service = {};
 
-    service.getAll = function (link) {
+    service.getAll = function (link, page, resultsOnPage) {
+        if (page){
+            link = link.replace(/page=\d+/, "page="+page);
+            console.log(link);
+        }
+        if (resultsOnPage){
+            link = link.replace(/size=\d+/, "size="+resultsOnPage);
+            console.log(link);
+        }
         return $http({method: "GET", url: link});
     };
 
