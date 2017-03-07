@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         builder.userDetailsService(userDetailsService);
     }
 
+    //TODO add logout
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()

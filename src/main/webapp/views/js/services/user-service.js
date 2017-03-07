@@ -16,6 +16,22 @@ angular.module('jrTest').factory('UserService', function UserService($http){
         }
     };
 
+    service.getLinkToDoneTasks = function(user){
+        for (var i = 0; i<user.links.length; ++i){
+            if (user.links[i].rel === "done-tasks"){
+                return user.links[i].href;
+            }
+        }
+    };
+
+    service.getLinkToUndoneTasks = function (user) {
+        for (var i = 0; i<user.links.length; ++i){
+            if (user.links[i].rel === "undone-tasks"){
+                return user.links[i].href;
+            }
+        }
+    };
+
     service.login = function (data) {
         return $http({
             method: "POST",
