@@ -8,8 +8,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static net.example.web.controllers.DefaultPageParameters.RESULTS_ON_PAGE;
-import static net.example.web.controllers.DefaultPageParameters.START_PAGE;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -33,10 +31,14 @@ public class UserResourceAsm extends ResourceAssemblerSupport<User, UserResource
         resource.setPassword(user.getPassword());
         Link self = linkTo(methodOn(UserController.class).getUser(user.getId())).withSelfRel();
         resource.add(self);
-        Link tasks = linkTo(methodOn(TaskController.class).getAllTasks(START_PAGE, RESULTS_ON_PAGE, user.getId())).withRel("tasks");
+        Link tasks = linkTo(methodOn(TaskController.class).getAllTasks(null, null, user.getId())).withRel("tasks");
         resource.add(tasks);
-        Link users = linkTo(methodOn(UserController.class).getAllUsers(START_PAGE, RESULTS_ON_PAGE)).withRel("users");
+        Link users = linkTo(methodOn(UserController.class).getAllUsers(null, null)).withRel("users");
         resource.add(users);
+        Link doneTasks = linkTo(methodOn(TaskController.class).getDoneTasks(null, null, user.getId(), true)).withRel("done-tasks");
+        resource.add(doneTasks);
+        Link undoneTasks = linkTo(methodOn(TaskController.class).getDoneTasks(null, null, user.getId(), false)).withRel("undone-tasks");
+        resource.add(undoneTasks);
         return resource;
     }
 }

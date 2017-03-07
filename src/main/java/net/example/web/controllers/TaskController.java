@@ -34,17 +34,22 @@ public class TaskController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/all/count")
-    public Long getNumberOfPages(@RequestParam(value = "tasksOnPage", defaultValue = DefaultPageParameters.RESULTS_ON_PAGE_STRING) int tasksOnPage,
-                                @RequestParam(value = "userId", defaultValue = "-1") long userId){
-        return service.getNumberOfAllTasksByUser(userId)/tasksOnPage + 1;
+    @RequestMapping(value = "/count")
+    public Long getNumberOfTasks(@RequestParam(value = "userId") long userId){
+        return service.getNumberOfAllTasksByUser(userId);
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<TaskResource> getAllTasks(@RequestParam(value = "page", defaultValue = DefaultPageParameters.START_PAGE_STRING)int page,
-                                          @RequestParam(value = "size", defaultValue = DefaultPageParameters.RESULTS_ON_PAGE_STRING) int size,
-                                          @RequestParam(value = "userId") long userId){
-        return service.getTasks(page, size, userId)
+    @RequestMapping(value = "/all/{userId}", method = RequestMethod.GET)
+    public List<TaskResource> getAllTasks(@RequestParam(value = "page", required = false)Integer page,
+                                              @RequestParam(value = "size", required = false) Integer size,
+                                              @PathVariable Long userId){
+        if (page!=null && size!=null){
+            return service.getTasks(page, size, userId)
+                    .stream()
+                    .map(task -> resourceAssembler.toResource(task))
+                    .collect(Collectors.toList());
+        }
+        return service.getAllTasks(userId)
                 .stream()
                 .map(task -> resourceAssembler.toResource(task))
                 .collect(Collectors.toList());
@@ -59,11 +64,17 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/done/{isDone}")
-    public List<TaskResource> getDoneTasks(@RequestParam(value = "page", defaultValue = DefaultPageParameters.START_PAGE_STRING) int page,
-                                           @RequestParam(value = "size", defaultValue = DefaultPageParameters.RESULTS_ON_PAGE_STRING) int size,
+    public List<TaskResource> getDoneTasks(@RequestParam(value = "page", required = false) Integer page,
+                                           @RequestParam(value = "size", required = false) Integer size,
                                            @RequestParam(value = "userId") long userId,
                                            @PathVariable boolean isDone){
-        return service.getDoneTasks(page, size, userId, isDone)
+        if (page!=null && size!=null){
+            return service.getDoneTasks(page, size, userId, isDone)
+                    .stream()
+                    .map(task -> resourceAssembler.toResource(task))
+                    .collect(Collectors.toList());
+        }
+        return service.getAllDoneTasks(userId, isDone)
                 .stream()
                 .map(task -> resourceAssembler.toResource(task))
                 .collect(Collectors.toList());

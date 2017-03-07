@@ -69,6 +69,7 @@ public class TaskControllerTest {
         when(service.save(task3, 1L)).thenReturn(task3);
         when(service.save(task3, -1)).thenThrow(new UserNotFoundException());
         when(service.remove(-1)).thenThrow(new TaskNotFoundException());
+        when(service.getAllTasks(1L)).thenReturn(taskList);
         resourceAsm = new TaskResourceAsm();
         taskController = new TaskController(service, resourceAsm, userService);
         mockMvc = MockMvcBuilders.standaloneSetup(taskController).build();
@@ -76,19 +77,16 @@ public class TaskControllerTest {
 
     @Test
     public void getNumberOfPages() throws Exception {
-        mockMvc.perform(get("/task/all/count")
+        mockMvc.perform(get("/task/count")
                 .param("tasksOnPage", "20")
                 .param("userId", "1"))
                 .andDo(print())
-                .andExpect(content().string("1"));
+                .andExpect(content().string("2"));
     }
 
     @Test
     public void getAllTasks() throws Exception {
-        mockMvc.perform(get("/task/all")
-                .param("page", "0")
-                .param("size", "20")
-                .param("userId", "1"))
+        mockMvc.perform(get("/task/all/1"))
                 .andDo(print())
                 .andExpect(jsonPath("$.length()", is(2)))
                 .andExpect(jsonPath("$[0].title", is("Test Title")))

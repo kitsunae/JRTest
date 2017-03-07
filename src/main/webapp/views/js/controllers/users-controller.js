@@ -15,7 +15,7 @@ angular.module('jrTest').controller('UsersController',
         $scope.pages = [];
         PagesService.getUserPages()
             .then(function successCallback(data) {
-                for (var i = 1; i <= data.data; ++i) {
+                for (var i = 1; i <= data.data/5+1; ++i) {
                     $scope.pages.push(i);
                 }
             }, function errorCallback(data) {
@@ -34,6 +34,7 @@ angular.module('jrTest').controller('UsersController',
         $scope.logout = function () {
             $cookies.remove("userId");
             $cookies.remove("JSESSIONID");
+            $scope.user = null;
         };
 
 

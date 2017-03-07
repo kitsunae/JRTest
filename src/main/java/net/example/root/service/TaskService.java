@@ -16,4 +16,6 @@ public interface TaskService {
     Task save(Task task, long userId);
     Task remove(long id);
     Task edit(Task task, long id);
+    List<Task> getAllTasks(Long userId);
+    List<Task> getAllDoneTasks(long userId, boolean isDone);
 }

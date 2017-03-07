@@ -8,8 +8,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static net.example.web.controllers.DefaultPageParameters.RESULTS_ON_PAGE;
-import static net.example.web.controllers.DefaultPageParameters.START_PAGE;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
@@ -36,7 +34,7 @@ public class TaskResourceAsm extends ResourceAssemblerSupport<Task, TaskResource
         resource.add(self);
         Link user = linkTo(methodOn(UserController.class).getUser(task.getUser().getId())).withRel("user");
         resource.add(user);
-        Link tasks = linkTo(methodOn(TaskController.class).getAllTasks(START_PAGE, RESULTS_ON_PAGE, task.getUser().getId())).withRel("tasks");
+        Link tasks = linkTo(methodOn(TaskController.class).getAllTasks(null, null, task.getUser().getId())).withRel("tasks");
         resource.add(tasks);
         return resource;
     }

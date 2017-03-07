@@ -35,6 +35,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> getAllTasks(Long userId) {
+        return taskRepository.findByUserId(userId);
+    }
+
+    @Override
     public Long getNumberOfAllTasksByUser(long userId) {
         return taskRepository.countByUserId(userId);
     }
@@ -47,6 +52,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getDoneTasks(int page, int size, long userId, boolean isDone) {
         return taskRepository.findByUserIdAndDone(userId, isDone, new PageRequest(page, size));
+    }
+
+    @Override
+    public List<Task> getAllDoneTasks(long userId, boolean isDone) {
+        return taskRepository.findByUserIdAndDone(userId, isDone);
     }
 
     @Override

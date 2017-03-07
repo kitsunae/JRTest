@@ -15,4 +15,5 @@ public interface UserService {
     Long getNumberOfAllUsers();
     User getUserByLogin(String login);
     User edit(User user, long id);
+    List<User> getAllUsers();
 }

@@ -7,7 +7,7 @@ angular.module('jrTest').factory('PagesService', function PagesServiceFactory($h
     service.getTaskPages = function (tasksOnPage, userId) {
         return $http({
             method: "GET",
-            url: "task/all/count",
+            url: "task/count",
             params: {
                 "tasksOnPage": tasksOnPage,
                 "userId": userId
@@ -16,7 +16,7 @@ angular.module('jrTest').factory('PagesService', function PagesServiceFactory($h
     };
 
     service.getUserPages = function () {
-        return $http({method: "GET", url: "user/all/count"});
+        return $http({method: "GET", url: "user/count"});
     };
 
     return service;

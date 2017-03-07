@@ -21,7 +21,7 @@ angular.module('jrTest').controller('TasksController',
                 });
             PagesService.getTaskPages(resultsOnPage, user.number)
                 .then(function successCallback(data) {
-                    for (var i = 1; i <= data.data; ++i) {
+                    for (var i = 1; i <= data.data/5+1; ++i) {
                         $scope.pages.push(i);
                     }
                 }, function errorCallback(data) {
@@ -75,8 +75,7 @@ angular.module('jrTest').controller('TasksController',
                 $scope.lastTask = $scope.tasks[indexOfLastTask];
                 TaskService.updateTask($scope.lastTask)
                     .then(function (response) {
-                        $scope.tasks.splice(1, indexOfLastTask);
-                        $scope.tasks.push(response.data);
+                        $scope.tasks.splice(indexOfLastTask, 1, response.data);
                     }, function (response) {
                         console.log(response.statusText);
                     });

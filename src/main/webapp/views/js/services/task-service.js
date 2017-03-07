@@ -5,15 +5,9 @@ angular.module('jrTest').factory('TaskService', function TaskServiceFactory($htt
     var service = {};
 
     service.getAll = function (link, page, resultsOnPage) {
-        if (page){
-            link = link.replace(/page=\d+/, "page="+page);
-            console.log(link);
-        }
-        if (resultsOnPage){
-            link = link.replace(/size=\d+/, "size="+resultsOnPage);
-            console.log(link);
-        }
-        return $http({method: "GET", url: link});
+        var pageNum = page || 0;
+        var size = resultsOnPage || 5;
+        return $http({method: "GET", url: link.replace(/\{.*\}/,""), params:{"page": pageNum, "size": size}});
     };
 
     service.getTaskSelfUrl = function (task) {

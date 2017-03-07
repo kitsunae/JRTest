@@ -73,4 +73,9 @@ public class UserServiceImpl implements UserService {
         user.setId(id);
         return repository.save(user);
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return repository.findAll();
+    }
 }

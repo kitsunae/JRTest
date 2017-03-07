@@ -30,9 +30,9 @@ public class UserController {
         this.resourceAssembler = resourceAssembler;
     }
 
-    @RequestMapping(value = "/all/count", method = RequestMethod.GET)
-    public Long getNumberOfPages(){
-        return service.getNumberOfAllUsers()/DefaultPageParameters.RESULTS_ON_PAGE+1;
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public Long getNumberOfUsers(){
+        return service.getNumberOfAllUsers();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -44,9 +44,15 @@ public class UserController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<UserResource> getAllUsers(@RequestParam(value = "page", defaultValue = DefaultPageParameters.START_PAGE_STRING)int page,
-                                          @RequestParam(value = "size", defaultValue = DefaultPageParameters.RESULTS_ON_PAGE_STRING) int size){
-        return service.getUsers(page, size)
+    public List<UserResource> getAllUsers(@RequestParam(value = "page", required = false)Integer page,
+                                          @RequestParam(value = "size", required = false) Integer size){
+        if (page!=null && size!=null){
+            return service.getUsers(page, size)
+                    .stream()
+                    .map(user -> resourceAssembler.toResource(user))
+                    .collect(Collectors.toList());
+        }
+        return service.getAllUsers()
                 .stream()
                 .map(user -> resourceAssembler.toResource(user))
                 .collect(Collectors.toList());
