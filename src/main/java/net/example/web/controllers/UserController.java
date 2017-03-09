@@ -27,6 +27,16 @@ public class UserController {
         this.resourceAssembler = resourceAssembler;
     }
 
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public List<UserResource> findUser(@RequestParam(value = "searchLine", required = false) String searchLine){
+        if (searchLine==null)
+            return null;
+        return service.findUsers(searchLine)
+                .stream()
+                .map(user -> resourceAssembler.toResource(user))
+                .collect(Collectors.toList());
+    }
+
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public Long getNumberOfUsers(){
         return service.getNumberOfAllUsers();

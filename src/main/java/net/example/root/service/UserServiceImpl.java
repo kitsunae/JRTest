@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,5 +78,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<User> findUsers(String searchLine) {
+        List<User> result = new ArrayList<>();
+        List<User> users = repository.findAll();
+        for (User user: users){
+            if (user.getName().contains(searchLine) || searchLine.contains(user.getName()))
+                result.add(user);
+            else if (user.getSurname().contains(searchLine) || searchLine.contains(user.getSurname()))
+                result.add(user);
+            else if (user.getLogin().contains(searchLine) || searchLine.contains(user.getLogin()))
+                result.add(user);
+        }
+        return result;
     }
 }

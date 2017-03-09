@@ -2,6 +2,8 @@ angular.module('jrTest').controller('UsersController',
     function ($rootScope, $window, $scope, UserService, PagesService, $cookies) {
         $scope.users = [];
         $scope.currentPage = 1;
+        $scope.searchLine = undefined;
+        var resultsOnPage = 5;
         UserService.getAllUsers()
             .then(function successCallback(response) {
                 $scope.users = response.data;
@@ -13,7 +15,7 @@ angular.module('jrTest').controller('UsersController',
         $scope.pages = [];
         PagesService.getUserPages()
             .then(function successCallback(data) {
-                for (var i = 1; i <= data.data/5+1; ++i) {
+                for (var i = 1; i <= data.data/resultsOnPage+1; ++i) {
                     $scope.pages.push(i);
                 }
             }, function errorCallback(data) {
@@ -73,5 +75,15 @@ angular.module('jrTest').controller('UsersController',
         $scope.getUser = function (user) {
             $rootScope.selectedUser = user;
             $window.location.href = "#!/users/" + user.number;
+        };
+
+        $scope.search = function () {
+            UserService.search($scope.searchLine)
+                .then(function (response) {
+                    $scope.users = response.data;
+                    $scope.searchLine = undefined;
+                }, function (error) {
+                    console.log(error.status);
+                });
         };
     });

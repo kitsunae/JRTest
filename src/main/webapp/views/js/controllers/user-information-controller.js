@@ -6,6 +6,7 @@ angular.module('jrTest').controller('UserInformationController', function($rootS
                $scope.user = response.data;
            }, function (error) {
                console.log(error.status);
+               $window.location.href = "#!/error";
            });
     }else{
         $scope.user = $rootScope.selectedUser;

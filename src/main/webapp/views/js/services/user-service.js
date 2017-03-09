@@ -89,5 +89,9 @@ angular.module('jrTest').factory('UserService', function UserService($http){
         return $http({method: "PUT", url: link, data: user});
     };
 
+    service.search = function (searchLine) {
+        return $http({method: "GET", url: "user/find", params: {"searchLine": searchLine}});
+    };
+
     return service;
 });

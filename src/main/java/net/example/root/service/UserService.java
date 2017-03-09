@@ -13,4 +13,5 @@ public interface UserService {
     User getUserByLogin(String login);
     User edit(User user, long id);
     List<User> getAllUsers();
+    List<User> findUsers(String searchLine);
 }

@@ -2,6 +2,13 @@
     <h1>List of users</h1>
 </div>
 <div class="container col-md-offset-2 col-md-8">
+    <form class="form-inline" ng-submit="search()">
+        <div class="form-group">
+            <label for="searchInput">Find</label>
+            <input type="text" class="form-control" id="searchInput" placeholder="John Doe" ng-model="searchLine">
+        </div>
+        <button type="submit" class="btn btn-info">Go!</button>
+    </form>
     <table class="table text-center table-hover">
         <thead>
         <tr>

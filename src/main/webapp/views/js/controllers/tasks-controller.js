@@ -19,7 +19,7 @@ angular.module('jrTest').controller('TasksController',
                 });
             PagesService.getTaskPages(resultsOnPage, user.number)
                 .then(function successCallback(data) {
-                    for (var i = 1; i <= data.data / 5 + 1; ++i) {
+                    for (var i = 1; i <= data.data / resultsOnPage + 1; ++i) {
                         $scope.pages.push(i);
                     }
                 }, function errorCallback(data) {
@@ -42,6 +42,7 @@ angular.module('jrTest').controller('TasksController',
                     init($scope.user);
                 }, function errorCallback(response) {
                     console.log('Server error' + response.statusText);
+                    $window.location.href = "#!/error";
                 });
         } else {
             $scope.user = $rootScope.selectedUser;
