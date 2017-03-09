@@ -4,9 +4,6 @@ import net.example.root.domain.Task;
 
 import java.util.List;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 public interface TaskService {
 
     List<Task> getTasks(int page, int size, long userId);

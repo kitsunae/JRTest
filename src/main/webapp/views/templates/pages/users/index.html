@@ -8,20 +8,16 @@
             <td class="lead col-md-3">Name</td>
             <td class="lead col-md-4">Surname</td>
             <td class="lead col-md-3">Login</td>
-            <td class="lead" ng-show="isLoggedIn()">Edit</td>
-            <td class="lead" ng-show="isLoggedIn()">Remove</td>
+            <td class="lead">Tasks</td>
         </tr>
         </thead>
         <tbody>
-        <tr role="button" ng-repeat="user in users" ng-click="setUser(user)">
+        <tr role="button" ng-repeat="user in users" ng-click="getUser(user)">
             <td class="col-md-3">{{user.name}}</td>
             <td class="col-md-3">{{user.surname}}</td>
             <td class="col-md-3">{{user.login}}</td>
             <td>
-                <button ng-show="isAvailable(user)">Edit</button>
-            </td>
-            <td>
-                <button ng-show="isAvailable(user)">Remove</button>
+                <button class="btn btn-info" ng-click="setUser(user)">Tasks</button>
             </td>
         </tr>
         </tbody>

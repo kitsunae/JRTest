@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import net.example.root.domain.User;
 import org.springframework.hateoas.ResourceSupport;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 public class UserResource extends ResourceSupport {
 
     private Long number;

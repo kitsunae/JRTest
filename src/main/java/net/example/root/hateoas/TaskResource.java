@@ -5,9 +5,6 @@ import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 public class TaskResource extends ResourceSupport {
 
     private Long number;

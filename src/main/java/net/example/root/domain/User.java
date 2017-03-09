@@ -5,9 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Entity(name = "Users")
 public class User implements Serializable {
     @Id

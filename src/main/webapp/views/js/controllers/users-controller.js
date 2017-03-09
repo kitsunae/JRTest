@@ -1,6 +1,3 @@
-/**
- * Created by lashi on 01.03.2017.
- */
 angular.module('jrTest').controller('UsersController',
     function ($rootScope, $window, $scope, UserService, PagesService, $cookies) {
         $scope.users = [];
@@ -10,6 +7,7 @@ angular.module('jrTest').controller('UsersController',
                 $scope.users = response.data;
             }, function errorCallback(response) {
                 console.log('Server error' + response.statusText);
+                $window.location.href = "#!/error";
             });
 
         $scope.pages = [];
@@ -32,9 +30,10 @@ angular.module('jrTest').controller('UsersController',
         };
 
         $scope.logout = function () {
+            UserService.logout();
             $cookies.remove("userId");
             $cookies.remove("JSESSIONID");
-            $scope.user = null;
+            $scope.credentials = null;
         };
 
 
@@ -69,5 +68,10 @@ angular.module('jrTest').controller('UsersController',
 
         $scope.isAvailable = function (user) {
             return user.login == $cookies.get("userId");
+        };
+
+        $scope.getUser = function (user) {
+            $rootScope.selectedUser = user;
+            $window.location.href = "#!/users/" + user.number;
         };
     });

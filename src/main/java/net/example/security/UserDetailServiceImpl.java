@@ -8,9 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by lashi on 04.03.2017.
- */
 @Component
 public class UserDetailServiceImpl implements UserDetailsService {
 

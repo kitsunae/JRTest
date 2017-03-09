@@ -5,9 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Entity
 public class Task {
     @Id

@@ -1,0 +1,50 @@
+<div class="container col-md-offset-2 col-md-8">
+    <div class="col-md-4">
+        <ul class="text-info list-unstyled">
+            <li><h2>Name:</h2></li>
+            <li><h2>Surname:</h2></li>
+            <li><h2>Login:</h2></li>
+        </ul>
+    </div>
+    <div class="col-md-4 col-md-offset-4">
+        <ul class="list-unstyled text-right">
+            <li><h2>{{user.name}}</h2></li>
+            <li><h2>{{user.surname}}</h2></li>
+            <li><h2>{{user.login}}</h2></li>
+        </ul>
+    </div>
+    <div class="btn-group btn-group-justified">
+        <div class="btn-group" role="group">
+            <button class="btn btn-info" ng-click="getUserTasks()">Tasks</button>
+        </div>
+        <div  class="btn-group" role="group" ng-show=isAvailable()>
+            <button class="btn btn-warning" ng-click="startEditing()">Edit</button>
+        </div>
+        <div  class="btn-group" role="group" ng-show=isAvailable()>
+            <button class="btn btn-danger" ng-click="deleteUser()">Remove</button>
+        </div>
+    </div>
+    <div class="container col-md-6 col-md-offset-3" ng-show="edition">
+        <form class="form-horizontal" novalidate ng-submit="edit()">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Name" ng-model="user.name">
+            </div>
+            <div class="form-group">
+                <label for="surname">Surname</label>
+                <input type="text" class="form-control" id="surname" placeholder="Surname" ng-model="user.surname">
+            </div>
+            <div class="form-group">
+                <label for="registration-login">Login</label>
+                <input type="text" class="form-control" id="registration-login" placeholder="Login" required ng-model="user.login">
+            </div>
+            <div class="form-group">
+                <label for="registration-password">Password</label>
+                <input type="password" class="form-control" id="registration-password" placeholder="Password" required ng-model="user.password">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-info pull-right" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>

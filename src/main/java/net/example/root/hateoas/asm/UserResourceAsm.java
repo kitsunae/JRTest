@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Component
 public class UserResourceAsm extends ResourceAssemblerSupport<User, UserResource> {
 

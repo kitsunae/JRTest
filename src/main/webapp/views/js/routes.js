@@ -1,10 +1,11 @@
-/**
- * Created by lashi on 01.03.2017.
- */
 angular.module('jrTest').config(function ($routeProvider) {
     $routeProvider.when("/users", {
             templateUrl: "templates/pages/users/index.html",
             controller: 'UsersController'
+        })
+        .when("/users/:id",{
+            templateUrl: "templates/pages/users/user.html",
+            controller: 'UserInformationController'
         })
         .when("/", {
             templateUrl: "templates/pages/users/index.html",

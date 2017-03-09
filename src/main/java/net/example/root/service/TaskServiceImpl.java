@@ -13,9 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Service
 @Transactional
 public class TaskServiceImpl implements TaskService {

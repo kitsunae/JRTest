@@ -17,9 +17,6 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"net.example.web"})

@@ -12,9 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-/**
- * Created by lashi on 04.03.2017.
- */
 @Configuration
 @ComponentScan(basePackages = {"net.example.security"})
 @EnableWebSecurity
@@ -44,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .formLogin()
                 .successHandler(authSuccess)
                 .failureHandler(authFailure)
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**")

@@ -1,6 +1,3 @@
-/**
- * Created by lashi on 04.03.2017.
- */
 angular.module('jrTest').factory('TaskService', function TaskServiceFactory($http) {
     var service = {};
 

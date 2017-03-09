@@ -14,9 +14,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Configuration
 @ComponentScan(basePackages = {"net.example.root"})
 public class RootConfig {

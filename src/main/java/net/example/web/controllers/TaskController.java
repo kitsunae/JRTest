@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @RestController
 @RequestMapping(value = "/task")
 public class TaskController {

@@ -8,9 +8,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by lashi on 04.03.2017.
- */
 class AccountUserDetails implements UserDetails {
 
     private final User user;

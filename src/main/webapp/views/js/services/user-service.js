@@ -1,6 +1,3 @@
-/**
- * Created by lashi on 04.03.2017.
- */
 angular.module('jrTest').factory('UserService', function UserService($http){
     var service = {};
 
@@ -51,6 +48,15 @@ angular.module('jrTest').factory('UserService', function UserService($http){
             });
     };
 
+    service.logout = function () {
+        $http({method: "GET", url: "logout"})
+            .then(function (response) {
+                alert("logout successful");
+            }, function (error) {
+                alert("error logging in");
+            });
+    };
+
     service.getAllUsers = function(page, resultsOnPage){
         var pageNumber = page || 0;
         var results = resultsOnPage || 5;
@@ -63,6 +69,24 @@ angular.module('jrTest').factory('UserService', function UserService($http){
             url: "user",
             data: user
         });
+    };
+
+    service.deleteUser = function (user) {
+        for (var i = 0; i<user.links.length; ++i){
+            if (user.links[i].rel === "self"){
+                var link = user.links[i].href;
+            }
+        }
+        return $http({method: "DELETE", url: link});
+    };
+
+    service.editUser = function (user) {
+        for (var i = 0; i<user.links.length; ++i){
+            if (user.links[i].rel === "self"){
+                var link = user.links[i].href;
+            }
+        }
+        return $http({method: "PUT", url: link, data: user});
     };
 
     return service;

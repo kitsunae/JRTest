@@ -1,8 +1,5 @@
-/**
- * Created by lashi on 01.03.2017.
- */
 angular.module('jrTest').controller('TasksController',
-    function ($http, $rootScope, $routeParams, $scope, TaskService, UserService, PagesService, $cookies) {
+    function ($http, $rootScope, $routeParams, $scope, TaskService, UserService, PagesService, $cookies, $window) {
         var clicked = undefined;
         var indexOfLastTask = -1;
         var resultsOnPage = 5;
@@ -18,7 +15,7 @@ angular.module('jrTest').controller('TasksController',
                     $scope.tasks = data.data;
                 }, function errorCallback(data) {
                     console.log(data.statusText);
-                    //TODO add exception handling
+                    $window.location.href = "#!/error";
                 });
             PagesService.getTaskPages(resultsOnPage, user.number)
                 .then(function successCallback(data) {

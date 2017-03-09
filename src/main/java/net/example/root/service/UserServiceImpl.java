@@ -1,5 +1,6 @@
 package net.example.root.service;
 
+import net.example.root.dao.TaskRepository;
 import net.example.root.dao.UserRepository;
 import net.example.root.domain.User;
 import net.example.web.exceptions.LoginNotAvailableException;
@@ -11,18 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by lashi on 24.02.2017.
- */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     private UserRepository repository;
+    private TaskRepository taskRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, TaskRepository taskRepository) {
         this.repository = repository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException();
         if (user.getPassword()==null)
             user.setPassword(u.getPassword());
-        user.setTasks(u.getTasks());
+        user.setTasks(taskRepository.findByUserId(id));
         user.setId(id);
         return repository.save(user);
     }
