@@ -21,8 +21,8 @@ public class RootConfig {
     @Bean
     public DataSource dataSource(){
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUsername("root"); //TODO change before sending
-        dataSource.setPassword("4112");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/test");
         dataSource.setInitialSize(5);
